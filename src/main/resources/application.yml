@@ -1,0 +1,24 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+  application:
+    name: practice-project
+  jpa:
+    open-in-view: false
+datasource:
+  postgres:
+    password: ${DB_PSW}
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: ${DB_URL}
+    username: ${DB_USERNAME}
+server:
+  port: 8086
+  shutdown: graceful
+  servlet:
+    context-path: /practice-project
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
