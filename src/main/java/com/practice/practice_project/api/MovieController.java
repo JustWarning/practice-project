@@ -7,7 +7,9 @@ import com.practice.practice_project.dto.response.MovieResponse;
 import com.practice.practice_project.service.business.MovieService;
 import com.practice.practice_project.service.db.MovieDbService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,14 @@ public class MovieController {
     public ResponseEntity<RestResponse<MovieRequest>> saveMovie(@RequestBody @Valid MovieRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(movieService.saveMovie(request));
     }
+    @PutMapping("rate")
+    public ResponseEntity<RestResponse<String>> setRate(
+            @Size(min = 1, max = 10, message = "Оценка от 1 до 10")
+            @RequestParam Integer rate,
+            @RequestParam Long movieId){
+        return ResponseEntity.accepted().body(movieService.setRate(rate, movieId));
+    }
+
 
     @GetMapping("find-movie")
     public ResponseEntity<RestResponse<MovieResponse>> getMovieByName(

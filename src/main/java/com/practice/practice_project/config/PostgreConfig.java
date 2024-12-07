@@ -23,7 +23,7 @@ import java.util.Map;
 @EnableJpaRepositories(
         entityManagerFactoryRef = "postgresDbEntityManager",
         transactionManagerRef = "postgresDbTransactionManager",
-        basePackages = "{kg.practice.practiceproject.model}")
+        basePackages = {"com.practice.practice_project.model"})
 public class PostgreConfig {
 
     @Bean(name = "postgresDataSource")
@@ -51,7 +51,7 @@ public class PostgreConfig {
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         return builder
                 .dataSource(dataSource)
-                .packages("kg.practice.practiceproject.model")
+                .packages("com.practice.practice_project.model")
                 .properties(properties)
                 .build();
     }

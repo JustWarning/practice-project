@@ -1,7 +1,6 @@
 package com.practice.practice_project.service.feign;
 
 import com.practice.practice_project.dto.request.NotificationRequest;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public class NotificationService {
     public void sendNotification(NotificationRequest request){
         try {
             notificationClient.sendNotification(request);
-        } catch (FeignException e){
+        } catch (Exception e){
             log.warn("Error was occurred while sending notification to client {}", request.getPhoneNumber());
         }
     }

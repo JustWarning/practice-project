@@ -9,6 +9,7 @@ import com.practice.practice_project.dto.response.MovieResponse;
 import com.practice.practice_project.model.ClientEntity;
 import com.practice.practice_project.model.ClientRepository;
 import com.practice.practice_project.model.MovieEntity;
+import com.practice.practice_project.model.MovieRepository;
 import com.practice.practice_project.service.db.MovieDbService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.List;
 public class MovieService {
     private final MovieDbService movieDbService;
     private final ClientRepository clientRepository;
+    private final MovieRepository movieRepository;
 
     public RestResponse<MovieResponse> findMovieByName(String name) {
         MovieEntity movieEntity = movieDbService.findByName(name);
@@ -60,5 +62,13 @@ public class MovieService {
                 })
                 .toList();
         return RestResponse.getResponse(movieResponses, SystemCodes.SUCCESS);
+    }
+
+    public RestResponse<String> setRate(Integer rate, Long movieId) {
+        MovieEntity entity = movieRepository.findById(movieId)
+                .orElseThrow(() -> new BadRequestException(SystemCodes.ENTITY_NOT_FOUND));
+        entity.setRate(rate);
+        movieRepository.save(entity);
+        return RestResponse.getResponse(null, SystemCodes.SUCCESS);
     }
 }

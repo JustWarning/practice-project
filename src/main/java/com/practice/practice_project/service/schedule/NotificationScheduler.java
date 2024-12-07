@@ -5,7 +5,7 @@ import com.practice.practice_project.model.ClientEntity;
 import com.practice.practice_project.model.ClientRepository;
 import com.practice.practice_project.model.MovieEntity;
 import com.practice.practice_project.model.MovieRepository;
-import com.practice.practice_project.service.feign.NotificationClient;
+import com.practice.practice_project.service.feign.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,17 +15,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationScheduler {
-    private final NotificationClient notificationClient;
+    private final NotificationService notificationClient;
     private final MovieRepository movieRepository;
     private final ClientRepository clientRepository;
 
-    @Scheduled(cron = "0 9 * * ?")
+    @Scheduled(cron = "0 * * * * *")
     public void sendNotification() {
         List<MovieEntity> entitiesWithoutRate =
                 movieRepository.findByRateIsNull();
